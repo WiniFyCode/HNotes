@@ -1,137 +1,58 @@
-# PageNotes AI - Chrome Extension
+# TECHVANGUARD - Chrome Extension
 
-Chrome extension để highlight văn bản, thêm ghi chú và sử dụng AI trên bất kỳ trang web nào.
+Chrome extension để highlight văn bản và thêm ghi chú trên bất kỳ trang web nào.
 
 ## Tính năng
 
-- ✨ Highlight văn bản với 3 màu sắc (Yellow, Blue, Pink)
+- ✨ Highlight văn bản với 7 màu sắc (Yellow, Blue, Pink, Green, Purple, Red, Orange)
 - 📝 Thêm ghi chú cho mỗi highlight
-- 🎯 Click vào note trong sidebar để scroll đến vị trí highlight
-- 🔍 Tìm kiếm và lọc highlights
-- 🤖 Tích hợp AI (demo)
-- 💾 Lưu trữ dữ liệu với Supabase
-- 🎨 Giao diện đẹp, dark mode
+- 💬 Hover vào highlight để xem nhanh ghi chú (tooltip hiển thị đúng màu highlight)
+- 🏷️ Gắn tag để phân loại highlights
+- 🎯 Click vào highlight card trong sidebar để scroll đến vị trí trên trang
+- 🔍 Tìm kiếm và lọc highlights theo website, ngày, màu sắc, tag
+- 📋 Copy nội dung highlight kèm note và source URL
+- 🎨 Tùy chỉnh tên hiển thị cho từng màu
+- 📝 Thêm Page Note - ghi chú cho cả trang mà không cần highlight
+- 🤖 Demo tích hợp AI (phân tích và chat)
+- 💾 Lưu trữ local với Chrome Storage
+- 🌙 Giao diện dark mode
 
-## Cài đặt Extension
-
-### Bước 1: Load Extension vào Chrome
+## Cài đặt
 
 1. Mở Chrome và truy cập `chrome://extensions/`
 2. Bật "Developer mode" ở góc trên bên phải
 3. Click "Load unpacked"
-4. Chọn thư mục `extension` trong project này
+4. Chọn thư mục chứa extension này
 
-### Bước 2: Sử dụng Extension
+## Sử dụng
 
-1. Click vào icon PageNotes AI trên toolbar để mở sidebar
-2. Trên bất kỳ trang web nào, chọn văn bản bạn muốn highlight
+1. Click vào icon TECHVANGUARD trên toolbar để mở sidebar
+2. Trên bất kỳ trang web nào, chọn (bôi đen) văn bản bạn muốn highlight
 3. Chọn màu highlight từ tooltip xuất hiện
-4. Click vào highlight để thêm ghi chú
-5. Trong sidebar, click vào bất kỳ note card nào để scroll đến vị trí highlight
+4. Click vào highlight để thêm/sửa ghi chú
+5. Hover vào highlight để xem nhanh ghi chú đã lưu
+6. Trong sidebar:
+   - Click vào highlight card để scroll đến vị trí trên trang
+   - Sử dụng các nút filter (Website, Date, Color, Tag) để lọc
+   - Search để tìm kiếm trong nội dung, ghi chú, tiêu đề trang
+   - Click icon edit để sửa note, label để thêm tag, copy để sao chép, delete để xóa
 
-## Cấu trúc Extension
+## Cấu trúc
 
 ```
-extension/
-├── manifest.json          # Cấu hình extension
-├── background.js          # Service worker xử lý background tasks
-├── content.js            # Script chạy trên mỗi trang web
-├── content.css           # Styles cho highlights
-├── sidebar.html          # Giao diện sidebar
-├── sidebar.css           # Styles cho sidebar
-├── sidebar.js            # Logic cho sidebar
-└── icons/                # Icons cho extension
+├── manifest.json           # Cấu hình extension
+├── js/
+│   ├── background.js       # Service worker
+│   ├── content.js          # Script chạy trên mỗi trang web
+│   ├── shared.js           # Constants dùng chung (màu sắc)
+│   └── sidebar.js          # Logic cho sidebar
+├── css/
+│   ├── content.css         # Styles cho highlights và tooltips
+│   └── sidebar.css         # Styles cho sidebar
+├── html/
+│   └── sidebar.html        # Giao diện sidebar
+└── icons/                  # Icons cho extension
 ```
-
-## Tính năng chi tiết
-
-### Highlighting
-- Chọn văn bản trên trang web
-- Tooltip xuất hiện với 3 màu: Yellow 💛, Blue 💙, Pink 💗
-- Click màu để tạo highlight
-- Highlight được lưu tự động
-
-### Ghi chú
-- Click vào highlight để thêm/sửa ghi chú
-- Ghi chú hiển thị trong sidebar
-- Tìm kiếm ghi chú bằng search box
-
-### Navigation
-- Click vào note card trong sidebar
-- Tự động scroll đến vị trí highlight trên trang
-- Nếu khác trang, sẽ chuyển đến trang đó trước
-- Highlight sẽ có animation pulse để dễ nhận biết
-
-### Filters & Sort
-- Lọc theo màu: All, Yellow, Blue, Pink
-- Sắp xếp: Recent, Oldest, URL
-- Search: Tìm trong nội dung, ghi chú, tiêu đề trang
-
-### AI Features (Demo)
-- Tab Analysis: Phân tích tổng quan highlights
-- Tab Ask AI: Chat với AI về nội dung đã lưu
-- Placeholder cho tích hợp AI thực tế
-
-## Tích hợp Supabase
-
-Database schema đã được tạo với bảng `highlights`:
-
-```sql
-- id: uuid
-- user_id: uuid (auth)
-- url: text
-- page_title: text
-- text_content: text
-- note: text
-- color: text
-- xpath: text
-- text_offset_start: integer
-- text_offset_end: integer
-- created_at: timestamptz
-- updated_at: timestamptz
-```
-
-### Để tích hợp Supabase vào extension:
-
-1. Cập nhật `content.js` và `sidebar.js` để sử dụng Supabase client
-2. Thêm authentication flow
-3. Thay thế `chrome.storage.local` bằng Supabase queries
-4. Sync highlights giữa các thiết bị
-
-## Phát triển tiếp
-
-### Cải thiện có thể thêm:
-- Authentication với Supabase Auth
-- Sync real-time giữa devices
-- Export highlights to PDF/Markdown
-- Tích hợp AI thực tế (OpenAI, Claude)
-- Share highlights với người khác
-- Tags và categories
-- Browser action popup nhanh
-- Keyboard shortcuts
-- Highlight trên PDF files
-
-## Troubleshooting
-
-### Extension không load được:
-- Kiểm tra manifest.json có đúng format
-- Reload extension tại chrome://extensions/
-
-### Highlight không xuất hiện:
-- Kiểm tra content.js đã load
-- Xem Console để tìm errors
-- Refresh trang web
-
-### Sidebar không mở:
-- Click icon extension trên toolbar
-- Kiểm tra permissions trong manifest
-
-## Lưu ý bảo mật
-
-- XPath được sử dụng để định vị highlights
-- Dữ liệu hiện lưu local với chrome.storage
-- Khi tích hợp Supabase, cần implement authentication
-- RLS policies đã được setup để bảo vệ dữ liệu
 
 ## License
 
