@@ -1,0 +1,11 @@
+{
+    "codingcopilot.enableCompletionLanguage": {
+        "vi - VN": true
+    },
+    "workbench.colorCustomizations": {
+        "titleBar.activeBackground": "#ce11ac",
+        "titleBar.inactiveBackground": "#ce11ac99",
+        "sash.hoverBorder": "#ed25c9"
+    },
+    "peacock.color": "#ce11ac"
+}
